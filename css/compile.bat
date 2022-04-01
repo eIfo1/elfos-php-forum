@@ -1,0 +1,1 @@
+sass -w scss/style.scss style.css --style=compressed
