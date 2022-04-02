@@ -1,3 +1,9 @@
+<?php
+session_start();
+require('include/config.php')
+?>
+
+
 <html lang="en">
 
 <head>

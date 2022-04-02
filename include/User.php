@@ -7,15 +7,17 @@ class User
     public $email;
     public $date_created;
     public $post_number;
+    public $auth;
 
     // Methods
-    public function __construct($id, $username, $email, $date_created, $post_number)
+    public function __construct($id, $username, $email, $date_created, $post_number, $auth)
     {
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
         $this->date_created = $date_created;
         $this->post_number = $post_number;
+        $this->auth = $auth;
     }
 
     public function getId()
