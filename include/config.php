@@ -15,26 +15,28 @@ $conn = $Site->connect();
 
 require('classes/Auth/User.php');
 
-if (@$_SESSION['IsAuthenticated'] == "true") {
-    $UserID = $_SESSION['UserID'];
-    $sql = "SELECT * FROM users WHERE id = ?;";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../signup/?error=databasefailure");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt, "s", $UserID);
-    mysqli_stmt_execute($stmt);
-
-    $Data = mysqli_stmt_get_result($stmt);
-
-    if ($row = mysqli_fetch_assoc($Data)) {
-        $User = new User($row['id'], $row['username'], $row['email'], $row['date_created'], $row['post_number'], true);
+if (!isset($User)) {
+    if (!isset($_SESSION['UserID'])) {
+        $User = new User(null, null, null, null, null, false);
     } else {
-        header("location: ../signup/?error=databasefailure");
-        exit();
+        $UserID = $_SESSION['UserID'];
+        $sql = "SELECT * FROM users WHERE user_id = ?;";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: ../signup/?error=databasefailure");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "s", $UserID);
+        mysqli_stmt_execute($stmt);
+
+        $Data = mysqli_stmt_get_result($stmt);
+
+        if ($row = mysqli_fetch_assoc($Data)) {
+            $User = new User($row['user_id'], $row['user_name'], $row['user_email'], $row['user_created'], $row['post_count'], true);
+        } else {
+            header("location: ../signup/?error=databasefailure");
+            exit();
+        }
     }
-} else {
-    $User = new User(null, null, null, null, null, false);
 }
