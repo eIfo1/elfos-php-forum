@@ -176,3 +176,19 @@ function UpdateUser($conn)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+
+function RequireAuth($User)
+{
+    if ($User->auth) {
+        header("location: /login?error=You must be logged in to view this page!");
+        exit();
+    }
+}
+
+function RequireGuest($User)
+{
+    if (!$User->auth) {
+        header("location: /dashboard?error=You must be logged out to view this page!");
+        exit();
+    }
+}

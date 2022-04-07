@@ -35,8 +35,19 @@ require('include/config.php')
             <div class="content">
                 <div class="links">
                     <a href="/forum">forum</a>
-                    <a href="/forum">register</a>
-                    <a href="/forum">login</a>
+                    <?php
+                    // if user is not authenticated
+                    if (!$User->auth) {
+                    ?>
+                        <a href="/forum">register</a>
+                        <a href="/forum">login</a>
+                    <?php
+                    } else {
+                    ?>
+                        <a href="/logout">logout</a>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>

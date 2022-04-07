@@ -2,7 +2,7 @@
 include('functions.php');
 date_default_timezone_set('America/New_York');
 
-require('Site.php');
+require('classes/Site.php');
 
 $db_name = "forum";
 $db_host = "localhost";
@@ -13,7 +13,7 @@ $db_password = "DatabasePass";
 $Site = new Site($db_name, $db_username, $db_host, $db_password);
 $conn = $Site->connect();
 
-require('User.php');
+require('classes/Auth/User.php');
 
 if (@$_SESSION['IsAuthenticated'] == "true") {
     $UserID = $_SESSION['UserID'];
