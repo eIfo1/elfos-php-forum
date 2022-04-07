@@ -39,8 +39,8 @@ require('include/config.php')
                     // if user is not authenticated
                     if (!$User->auth) {
                     ?>
-                        <a href="/forum">register</a>
-                        <a href="/forum">login</a>
+                        <a href="/register">register</a>
+                        <a href="/login">login</a>
                     <?php
                     } else {
                     ?>
