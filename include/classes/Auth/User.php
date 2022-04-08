@@ -7,6 +7,7 @@ class User
     public $email;
     public $date_created;
     public $post_count;
+    public $is_admin;
     public $auth;
 
     // Methods
@@ -82,6 +83,56 @@ class User
             }
             mysqli_stmt_bind_param($stmt, "ss", $this->email, $this->id);
             mysqli_stmt_execute($stmt);
+        }
+    }
+
+    private function QueryAdmin($connection)
+    {
+        $sql = "SELECT * FROM users WHERE user_id = ?;";
+        $stmt = mysqli_stmt_init($connection);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: ../?error=databasefailure");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $this->id);
+        mysqli_stmt_execute($stmt);
+        $Data = mysqli_stmt_get_result($stmt);
+        if ($row = mysqli_fetch_assoc($Data)) {
+            return $row['user_admin'];
+        }
+    }
+
+    // check if player is admin
+    public function IsAdmin($connection)
+    {
+        // ISSUE #2 - Admin check
+        $this->is_admin = $this->QueryAdmin($connection);
+
+        if ($this->is_admin == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // check if player is a super admin, $row['user_admin'] == 2
+    public function IsSuperAdmin($connection)
+    {
+        $sql = "SELECT * FROM users WHERE user_id = ?;";
+        $stmt = mysqli_stmt_init($connection);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: ../?error=databasefailure");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $this->id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($row = mysqli_fetch_assoc($result)) {
+            if ($row['user_admin'] == 2) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
