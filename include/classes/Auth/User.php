@@ -135,29 +135,4 @@ class User
             }
         }
     }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function getDateCreated()
-    {
-        return $this->date_created;
-    }
-
-    public function getPostCount()
-    {
-        return $this->post_count;
-    }
 }
